@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackathon - V SANCA Week</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta name="theme-color" content="#002855">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <div class="nav__container">
+        <div class="nav__logo">
+          <img src="logo_ieee.png" alt="IEEE USP São Carlos" class="logo">
+          <span class="logo-text">V SANCA Week</span>
+        </div>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item"><a href="index.html#home" class="nav__link">Início</a></li>
+            <li class="nav__item"><a href="index.html#minicursos" class="nav__link">Minicursos</a></li>
+            <li class="nav__item"><a href="index.html#programacao" class="nav__link">Programação</a></li>
+            <li class="nav__item"><a href="palestrantes.html" class="nav__link">Palestrantes</a></li>
+            <li class="nav__item"><a href="inscricoes.html" class="nav__link nav__cta">Inscrever-se</a></li>
+          </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- Hero -->
+  <section class="hero hero--compact" id="hackathon-hero">
+      <div class="hero__container">
+        <div class="hero__content">
+          <h1 class="hero__title">
+            <span class="hero__main-title">SanCode Challenge</span>
+            <span class="hero__date">11 de Outubro • 14h – 18h</span>
+            <span class="hero__location">Competição de Programação</span>
+          </h1>
+          <p class="section__subtitle" style="margin-top:0">
+            A Computer Society da USP São Carlos convida você para participar de uma competição de programação no dia 11/10, das 14h às 18h.
+            Desafie suas habilidades em trio em programação competitiva, inspirada no IEEEXtreme, concorra a premiações exclusivas e finalize o dia com uma pizza especial para todos os participantes!
+          </p>
+          <div class="hero__cta">
+            <a href="#form" class="btn btn--primary"><i class="fa-solid fa-pen-to-square"></i> Inscrever equipe</a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="hero__grid" aria-hidden="true">
+            <div class="grid__item"><img src="image/hero CS/1.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/2.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/3.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/4.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/5.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/6.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/7.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/8.png" alt="" loading="lazy" decoding="async" /></div>
+            <div class="grid__item"><img src="image/hero CS/9.png" alt="" loading="lazy" decoding="async" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulário de Inscrição do Hackathon -->
+    <section class="inscricoes" id="form">
+      <div class="container">
+        <h2 class="section__title">Inscrição do Hackathon</h2>
+        <p class="section__subtitle">Forme seu trio e garanta sua vaga!</p>
+
+        <div class="notice notice--warning">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          Observação: a inscrição para a competição é diferente da inscrição para o evento. Atente-se!
+        </div>
+
+        <form id="hackathonForm" class="form">
+          <input type="text" name="_hp" id="_hp_h" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;" />
+          <div class="form__grid">
+            <div class="form__group form__group--full">
+              <label for="nome1">Nome do integrante 1 (Líder)</label>
+              <input type="text" id="nome1" name="nome1" required autocomplete="name">
+            </div>
+            <div class="form__group form__group--full">
+              <label for="nome2">Nome do integrante 2</label>
+              <input type="text" id="nome2" name="nome2" required autocomplete="name">
+            </div>
+            <div class="form__group form__group--full">
+              <label for="nome3">Nome do integrante 3</label>
+              <input type="text" id="nome3" name="nome3" required autocomplete="name">
+            </div>
+
+            <div class="form__group">
+              <label for="nusp1">NUSP (se tiver)</label>
+              <input type="text" id="nusp1" name="nusp1" pattern="[0-9]*" inputmode="numeric" placeholder="Opcional" autocomplete="off">
+            </div>
+            <div class="form__group">
+              <label for="nusp2">NUSP (se tiver)</label>
+              <input type="text" id="nusp2" name="nusp2" pattern="[0-9]*" inputmode="numeric" placeholder="Opcional" autocomplete="off">
+            </div>
+            <div class="form__group">
+              <label for="nusp3">NUSP (se tiver)</label>
+              <input type="text" id="nusp3" name="nusp3" pattern="[0-9]*" inputmode="numeric" placeholder="Opcional" autocomplete="off">
+            </div>
+
+
+            <div class="form__group">
+              <label for="celular">Celular do líder</label>
+              <input type="tel" id="celular" name="celular" placeholder="(xx) xxxxx-xxxx" required inputmode="tel" autocomplete="tel">
+            </div>
+            <div class="form__group">
+              <label for="email">Email do líder</label>
+              <input type="email" id="email" name="email" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form__actions">
+            <button type="submit" class="btn btn--primary"><i class="fa-solid fa-paper-plane"></i> Enviar inscrição</button>
+            <p id="hackathonStatus" class="form__status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <div class="footer__logo">
+          <img src="logo_ieee.png" alt="IEEE USP São Carlos" class="footer__logo-img">
+          <div class="footer__info">
+            <h3>IEEE USP São Carlos</h3>
+            <p>@ieeeuspsc</p>
+          </div>
+        </div>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/ieee.uspsc/" class="social__link" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/ieee-usp-são-carlos/" class="social__link" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:ieee.uspsc@gmail.com" class="social__link"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2025 IEEE USP São Carlos. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="hackathon.js"></script>
+</body>
+</html>
