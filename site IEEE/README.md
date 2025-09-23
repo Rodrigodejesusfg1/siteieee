@@ -1,3 +1,50 @@
+# Sanca Week Site
+
+Este repositório contém o site do evento com páginas estáticas e APIs para inscrições, agora preparado para deploy no Render (Flask + Gunicorn).
+
+## Deploy no Render
+
+1. Faça login no Render e crie um novo Web Service a partir deste repositório.
+2. O Render detectará `render.yaml` com as instruções de build e start:
+	- Build: `pip install -r requirements.txt`
+	- Start: `gunicorn server:app --bind 0.0.0.0:$PORT --timeout 120`
+3. Configure as variáveis de ambiente no Render (Settings > Environment):
+	- `SUPABASE_URL` (obrigatória)
+	- `SUPABASE_KEY` (anon/public) ou `SUPABASE_SERVICE_ROLE_KEY` (recomendada para servidor)
+4. Acesse a URL pública do serviço. As rotas disponíveis:
+	- Frontend: `/` (servido via Flask – arquivos estáticos da raiz)
+	- API: `POST /api/inscricao`
+	- API: `POST /api/hackathon`
+	- Health: `GET /api/health`
+
+> Observação: Rotas não-API sem extensão `.html` (ex.: `/palestrantes`) são resolvidas automaticamente para o arquivo `.html` correspondente.
+
+## Variáveis de Ambiente
+
+- `SUPABASE_URL`: URL do projeto Supabase
+- `SUPABASE_KEY`: chave anônima (client) – use apenas se não tiver a service role configurada
+- `SUPABASE_SERVICE_ROLE_KEY`: chave de service role (server) – preferida no backend
+
+Mantenha o arquivo `.env` fora do versionamento ou sem segredos sensíveis quando for público.
+
+## Como rodar localmente
+
+1. Crie e ative um virtualenv (opcional)
+2. Instale dependências: `pip install -r requirements.txt`
+3. Defina as variáveis de ambiente (`.env` ou via shell)
+4. Rode o servidor: `python server.py`
+5. Acesse `http://127.0.0.1:5000`
+
+## Endpoints
+
+- `POST /api/inscricao` – cria inscrição no Supabase (tabela `inscricoes`)
+- `POST /api/hackathon` – cria inscrição do hackathon (tabela `hackathon_inscricoes`)
+- `GET /api/health` – verifica conectividade com o banco
+
+## Notas
+
+- O projeto também contém uma configuração anterior para Vercel em `api/` (serverless). Para Render, a aplicação usa Flask diretamente (`server.py`).
+- Se precisar de rota estática adicional, basta adicionar o arquivo `.html` na raiz. O servidor irá servir automaticamente.
 # V SANCA Week - Backend de Inscrições
 
 Backend em Python Flask + Supabase para processar inscrições do formulário.

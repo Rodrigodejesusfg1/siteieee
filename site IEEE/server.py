@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory, send_file, abort
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -285,6 +285,35 @@ def test_schema():
             'success': False,
             'message': str(e)
         }), 500
+
+@app.route('/')
+def index():
+    """Serve homepage"""
+    try:
+        return send_file('index.html')
+    except Exception:
+        return jsonify({
+            'success': False,
+            'message': 'Arquivo index.html não encontrado'
+        }), 404
+
+
+@app.route('/<path:path>')
+def static_proxy(path: str):
+    """Serve any static file from project root, but never intercept /api/*"""
+    # Never serve API paths here
+    if path.startswith('api/'):
+        abort(404)
+
+    # Serve existing files directly
+    if os.path.isfile(path):
+        return send_from_directory('.', path)
+
+    # Convenience: allow routes without .html extension (e.g., /palestrantes)
+    if os.path.isfile(f"{path}.html"):
+        return send_from_directory('.', f"{path}.html")
+
+    return jsonify({'error': 'Not found'}), 404
 
 if __name__ == '__main__':
     # Create table on startup
