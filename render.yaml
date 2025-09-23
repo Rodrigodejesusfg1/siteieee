@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: sanca-week-site
+    env: python
+    # The repository has the app inside the "site IEEE" folder at the repo root
+    # so we set Render's working directory there.
+    rootDir: 'site IEEE'
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn server:app --bind 0.0.0.0:$PORT --timeout 120
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: '1'
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
