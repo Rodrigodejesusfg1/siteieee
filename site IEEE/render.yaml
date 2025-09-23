@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: sanca-week-site
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn server:app --host 0.0.0.0 --port $PORT
-    envVars:
-      - key: PYTHONUNBUFFERED
-        value: '1'
