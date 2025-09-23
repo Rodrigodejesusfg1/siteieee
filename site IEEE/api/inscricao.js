@@ -16,8 +16,10 @@ function parseUrlEncoded(body) {
 }
 
 async function getBody(req) {
-  // Prefer req.body when available (Vercel parses JSON); fallback to raw stream
-  if (req.body && Object.keys(req.body).length) return req.body;
+  // Vercel automatically parses req.body for most content types
+  if (req.body !== undefined) return req.body;
+  
+  // Fallback for raw body parsing (shouldn't be needed on Vercel)
   return new Promise((resolve, reject) => {
     let data = '';
     req.on('data', (chunk) => (data += chunk));
@@ -40,14 +42,23 @@ module.exports = async (req, res) => {
 
   try {
     const contentType = (req.headers['content-type'] || '').toLowerCase();
-    const raw = await getBody(req);
-    let data = {};
-    if (typeof raw === 'string' && contentType.includes('application/x-www-form-urlencoded')) {
-      data = parseUrlEncoded(raw);
-    } else if (typeof raw === 'string' && contentType.includes('application/json')) {
-      data = JSON.parse(raw || '{}');
-    } else if (typeof raw === 'object') {
-      data = raw;
+    let data = await getBody(req);
+    
+    // Handle URL-encoded form data
+    if (typeof data === 'string' && contentType.includes('application/x-www-form-urlencoded')) {
+      data = parseUrlEncoded(data);
+    }
+    // Handle JSON data (Vercel usually parses this automatically into req.body)
+    else if (typeof data === 'string' && contentType.includes('application/json')) {
+      try {
+        data = JSON.parse(data || '{}');
+      } catch (e) {
+        data = {};
+      }
+    }
+    // If data is already an object, use as-is
+    else if (typeof data !== 'object' || data === null) {
+      data = {};
     }
 
     if (!data || Object.keys(data).length === 0) {
