@@ -184,6 +184,82 @@ if (slides.length > 0) {
     }
 }
 
+// Touch support for carousel
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+
+function handleGesture() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    
+    // Only handle horizontal swipes (ignore vertical scrolling)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+            prevSlide(); // Swipe right - go to previous
+        } else {
+            nextSlide(); // Swipe left - go to next
+        }
+    }
+}
+
+if (carouselContainer) {
+    // Touch events
+    carouselContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        stopAutoPlay(); // Stop auto-play when user interacts
+    }, { passive: true });
+
+    carouselContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleGesture();
+        startAutoPlay(); // Resume auto-play after interaction
+    }, { passive: true });
+
+    // Mouse events for desktop drag (optional enhancement)
+    let isMouseDown = false;
+    let mouseStartX = 0;
+
+    carouselContainer.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        mouseStartX = e.clientX;
+        stopAutoPlay();
+        carouselContainer.style.cursor = 'grabbing';
+    });
+
+    carouselContainer.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        e.preventDefault();
+    });
+
+    carouselContainer.addEventListener('mouseup', (e) => {
+        if (!isMouseDown) return;
+        isMouseDown = false;
+        carouselContainer.style.cursor = 'grab';
+        
+        const deltaX = e.clientX - mouseStartX;
+        if (Math.abs(deltaX) > 50) {
+            if (deltaX > 0) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        }
+        startAutoPlay();
+    });
+
+    carouselContainer.addEventListener('mouseleave', () => {
+        if (isMouseDown) {
+            isMouseDown = false;
+            carouselContainer.style.cursor = 'grab';
+            startAutoPlay();
+        }
+    });
+}
+
 // Handle window resize
 window.addEventListener('resize', () => {
     updateCarousel();
@@ -275,35 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 });
-
-// Touch/swipe support for carousel on mobile
-let touchStartX = 0;
-let touchEndX = 0;
-
-function handleSwipe() {
-    const threshold = 50; // minimum distance for swipe
-    const swipeDistance = touchEndX - touchStartX;
-    
-    if (Math.abs(swipeDistance) > threshold) {
-        if (swipeDistance > 0) {
-            prevSlide(); // Swipe right -> previous slide
-        } else {
-            nextSlide(); // Swipe left -> next slide
-        }
-    }
-}
-
-const carousel = document.querySelector('.carousel');
-if (carousel) {
-    carousel.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-    
-    carousel.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-}
 
 // Optional: track CTA clicks (now generic, without hardcoded forms.gle)
 document.addEventListener('DOMContentLoaded', () => {

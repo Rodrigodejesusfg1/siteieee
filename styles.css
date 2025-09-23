@@ -93,16 +93,73 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+/* Global mobile overflow protection */
+@media (max-width: 768px) {
+    * {
+        overflow-x: hidden;
+    }
+    
+    .container {
+        padding: 0 var(--space-4);
+        max-width: 100%;
+    }
+    
+    /* Optimize typography for mobile */
+    .section__title {
+        font-size: var(--font-size-3xl);
+        line-height: 1.2;
+        margin-bottom: var(--space-4);
+    }
+    
+    .section__subtitle {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-6);
+    }
+    
+    /* Improve button touch targets */
+    .btn {
+        min-height: 44px;
+        padding: var(--space-3) var(--space-6);
+        font-size: var(--font-size-base);
+    }
+    
+    /* Optimize hero section for mobile */
+    .hero__title {
+        text-align: center;
+        margin-bottom: var(--space-8);
+    }
+    
+    .hero__main-title {
+        font-size: var(--font-size-4xl);
+        display: block;
+        margin-bottom: var(--space-2);
+    }
+    
+    .hero__date, .hero__location {
+        font-size: var(--font-size-xl);
+        display: block;
+        margin-bottom: var(--space-2);
+    }
+    
+    /* Improve countdown display */
+    .countdown {
+        gap: var(--space-3);
+        margin: var(--space-8) 0;
+    }
+    
+    .countdown__item {
+        min-width: 70px;
+    }
+    
+    .countdown__number {
+        font-size: var(--font-size-3xl);
+    }
+}
 .container {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 var(--space-6);
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 0 var(--space-4);
-    }
 }
 
 /* Header - Dark minimalist */
@@ -134,7 +191,6 @@ img {
 .nav__logo {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
 }
 
 .logo {
@@ -142,16 +198,10 @@ img {
     width: auto;
 }
 
-.logo-text {
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
 .nav__list {
     display: flex;
     list-style: none;
-    gap: var(--space-8);
+    gap: var(--space-10);
     align-items: center;
 }
 
@@ -159,7 +209,7 @@ img {
     text-decoration: none;
     color: var(--text-secondary);
     font-weight: 500;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     transition: color 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -196,12 +246,22 @@ img {
     place-items: center;
 }
 
+/* Adjust spacing for tablets */
+@media (max-width: 1024px) {
+    .nav__list {
+        gap: var(--space-6);
+    }
+    
+    .nav__link {
+        font-size: var(--font-size-sm);
+    }
+}
+
 @media (max-width: 768px) {
     .header { --header-h: 64px; }
     .nav__container { padding: 0 var(--space-4); }
 
     .logo { height: 34px; }
-    .logo-text { display: none; }
     
     .nav__menu {
         position: fixed;
@@ -215,31 +275,74 @@ img {
         transform: translateY(-100%);
         opacity: 0;
         transition: all 0.3s ease;
-        z-index: 2000; /* ensure menu is above all page content */
+        z-index: 2000;
         max-height: calc(100vh - (var(--header-h) + env(safe-area-inset-top)));
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
+    
     /* Improve legibility and tap targets in the mobile dropdown menu */
-    .nav__menu .nav__link { color: var(--text-primary); display: block; padding: var(--space-3) 0; }
-    .nav__menu .nav__link:hover { color: var(--accent-cyan); }
+    .nav__menu .nav__link { 
+        color: var(--text-primary); 
+        display: block; 
+        padding: var(--space-4) 0; 
+        font-size: var(--font-size-lg);
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .nav__menu .nav__link:hover { 
+        color: var(--accent-cyan);
+        transform: translateX(8px);
+    }
     
     .nav__menu.active { transform: translateY(0); opacity: 1; }
     
-    .nav__list { flex-direction: column; gap: 0; padding: var(--space-4) var(--space-6); }
+    .nav__list { 
+        flex-direction: column; 
+        gap: 0; 
+        padding: var(--space-6) var(--space-6); 
+    }
     
-    .nav__item { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.08); padding: var(--space-2) 0; }
+    .nav__item { 
+        width: 100%; 
+        border-bottom: 1px solid rgba(255,255,255,0.08); 
+        padding: var(--space-2) 0; 
+    }
     
-    /* Make CTA easier to tap inside mobile menu */
+    .nav__item:last-child {
+        border-bottom: none;
+    }
+    
+    /* Make CTA more prominent in mobile menu */
     .nav__menu .nav__cta {
         display: block;
         width: 100%;
         text-align: center;
-        margin-top: var(--space-3);
+        margin-top: var(--space-6);
         padding: var(--space-4) var(--space-6);
+        background: var(--accent-blue);
+        color: var(--white);
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        transform: none;
     }
     
-    .nav__toggle { display: grid; }
+    .nav__menu .nav__cta:hover {
+        background: var(--accent-cyan);
+        transform: none;
+    }
+    
+    .nav__toggle { 
+        display: grid;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-md);
+        transition: all 0.3s ease;
+    }
+    
+    .nav__toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
 }
 
 /* Hero Section - MIT Media Lab Style with grain effect */
@@ -809,9 +912,36 @@ img {
 
 @media (max-width: 768px) {
     .carousel__btn {
-        width: 68px;
-        height: 68px;
-        font-size: var(--font-size-xl);
+        width: 48px;
+        height: 48px;
+        font-size: var(--font-size-lg);
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+    }
+    
+    .carousel__btn:hover,
+    .carousel__btn:active {
+        background: var(--accent-blue);
+        border-color: var(--accent-blue);
+        transform: scale(1.05);
+    }
+    
+    /* Make carousel controls more prominent on mobile */
+    .carousel__controls {
+        margin-top: var(--space-6);
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Add visual feedback for swipe gestures */
+    .carousel__container {
+        cursor: grab;
+        user-select: none;
+    }
+    
+    .carousel__container:active {
+        cursor: grabbing;
     }
 }
 
@@ -844,8 +974,25 @@ img {
 }
 
 @media (max-width: 768px) {
+    /* Fix carousel mobile overflow */
+    .carousel {
+        overflow: hidden;
+        margin: 0 calc(-1 * var(--space-4));
+        padding: 0 var(--space-4);
+    }
+    
+    .carousel__container {
+        gap: var(--space-4);
+    }
+    
     .carousel__slide {
-        min-width: calc(100% - var(--space-4));
+        min-width: calc(100% - var(--space-8));
+        margin: 0 var(--space-2);
+    }
+    
+    /* Ensure course cards maintain proper sizing */
+    .course__card {
+        min-height: 400px;
     }
     
     .section__title {
@@ -1491,9 +1638,43 @@ img {
     }
 
     @media (max-width: 768px) {
-        .slot { grid-template-columns: 1fr; padding: var(--space-4); }
-        .slot__media { height: 160px; }
-        .slot__title { font-size: var(--font-size-xl); }
+        .tabs {
+            gap: var(--space-2);
+            margin: var(--space-4) 0 var(--space-6);
+        }
+        
+        .tab {
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+            padding: var(--space-3);
+            font-size: var(--font-size-sm);
+        }
+        
+        .slot { 
+            grid-template-columns: 1fr; 
+            padding: var(--space-4); 
+            gap: var(--space-4);
+        }
+        
+        .slot__media { 
+            height: 140px; 
+            order: -1;
+        }
+        
+        .slot__title { 
+            font-size: var(--font-size-xl); 
+            line-height: 1.3;
+        }
+        
+        .slot__desc {
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+        
+        .schedule {
+            gap: var(--space-4);
+        }
     }
 
     .mosaic {

@@ -1,0 +1,11 @@
+node_modules/
+.env*
+*.log
+.DS_Store
+server.py
+requirements.txt
+*.sql
+*.md
+TESTE.md
+README.md
+INSTRUCOES_CORRECAO_SUPABASE.md
