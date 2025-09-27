@@ -6,15 +6,26 @@ const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const carouselDots = document.getElementById('carousel-dots');
 
+// Helpers
+const isMobile = () => window.innerWidth <= 768;
+
 // Navigation Toggle
 if (navToggle && navMenu) {
     navToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
-        document.body.classList.toggle('no-scroll', navMenu.classList.contains('active'));
+        const isActive = navMenu.classList.contains('active');
+        document.body.classList.toggle('no-scroll', isActive);
+        // Ensure it actually shows on mobile regardless of CSS conflicts
+        if (isMobile()) {
+            navMenu.style.display = isActive ? 'block' : '';
+        }
+        // ARIA for accessibility
+        navToggle.setAttribute('aria-expanded', String(isActive));
+        navMenu.setAttribute('aria-hidden', String(!isActive));
         
         // Toggle hamburger to X
         const icon = navToggle.querySelector('i');
-        if (navMenu.classList.contains('active')) {
+        if (isActive) {
             icon.classList.remove('fa-bars');
             icon.classList.add('fa-times');
         } else {
@@ -29,6 +40,9 @@ if (navToggle && navMenu) {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
             document.body.classList.remove('no-scroll');
+            navMenu.style.display = '';
+            navToggle.setAttribute('aria-expanded', 'false');
+            navMenu.setAttribute('aria-hidden', 'true');
             const icon = navToggle.querySelector('i');
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');
@@ -85,15 +99,28 @@ let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel__slide');
 const totalSlides = slides.length;
 
+function getGapPx() {
+    if (!carouselContainer) return 24;
+    const styles = window.getComputedStyle(carouselContainer);
+    return parseFloat(styles.gap) || 24;
+}
+
+function getSlideWidth() {
+    if (!slides.length) return 0;
+    return slides[0].offsetWidth + getGapPx();
+}
+
 function updateCarousel() {
     if (!carouselContainer) return;
-    // Read the actual CSS gap applied to the container for precise offset
-    const styles = window.getComputedStyle(carouselContainer);
-    const gap = parseFloat(styles.gap) || 24;
-    const slideWidth = slides[0].offsetWidth + gap;
-    const offset = -currentSlide * slideWidth;
-    carouselContainer.style.transform = `translateX(${offset}px)`;
-    
+    const slidesPerView = getSlidesPerView();
+    if (slidesPerView <= 1) {
+        // On mobile, rely on native horizontal scroll, not transform
+        carouselContainer.style.transform = 'none';
+    } else {
+        const slideWidth = getSlideWidth();
+        const offset = -currentSlide * slideWidth;
+        carouselContainer.style.transform = `translateX(${offset}px)`;
+    }
     // Update dots
     updateCarouselDots();
 }
@@ -115,7 +142,12 @@ function updateCarouselDots() {
             dot.classList.add('active');
         }
         dot.addEventListener('click', () => {
-            currentSlide = i * slidesPerView;
+            const perView = getSlidesPerView();
+            currentSlide = i * perView;
+            if (perView <= 1 && carouselContainer) {
+                const slideWidth = getSlideWidth();
+                carouselContainer.scrollTo({ left: currentSlide * slideWidth, behavior: 'smooth' });
+            }
             updateCarousel();
         });
         carouselDots.appendChild(dot);
@@ -131,6 +163,14 @@ function getSlidesPerView() {
 
 function nextSlide() {
     const slidesPerView = getSlidesPerView();
+    if (slidesPerView <= 1 && carouselContainer) {
+        const slideWidth = getSlideWidth();
+        const maxIndex = totalSlides - 1;
+        currentSlide = Math.min(currentSlide + 1, maxIndex);
+        carouselContainer.scrollBy({ left: slideWidth, behavior: 'smooth' });
+        updateCarouselDots();
+        return;
+    }
     if (currentSlide < totalSlides - slidesPerView) {
         currentSlide++;
     } else {
@@ -141,6 +181,13 @@ function nextSlide() {
 
 function prevSlide() {
     const slidesPerView = getSlidesPerView();
+    if (slidesPerView <= 1 && carouselContainer) {
+        const slideWidth = getSlideWidth();
+        currentSlide = Math.max(currentSlide - 1, 0);
+        carouselContainer.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+        updateCarouselDots();
+        return;
+    }
     if (currentSlide > 0) {
         currentSlide--;
     } else {
@@ -174,6 +221,7 @@ function stopAutoPlay() {
 // Initialize carousel
 if (slides.length > 0) {
     updateCarouselDots();
+    updateCarousel();
     startAutoPlay();
     
     // Pause auto-play on hover
@@ -181,6 +229,20 @@ if (slides.length > 0) {
     if (carousel) {
         carousel.addEventListener('mouseenter', stopAutoPlay);
         carousel.addEventListener('mouseleave', startAutoPlay);
+    }
+    // Sync dots with native scroll on mobile
+    if (carouselContainer) {
+        let scrollTick;
+        carouselContainer.addEventListener('scroll', () => {
+            if (!isMobile()) return;
+            if (scrollTick) cancelAnimationFrame(scrollTick);
+            scrollTick = requestAnimationFrame(() => {
+                const slideWidth = getSlideWidth();
+                const index = Math.round(carouselContainer.scrollLeft / slideWidth);
+                currentSlide = Math.min(Math.max(index, 0), totalSlides - 1);
+                updateCarouselDots();
+            });
+        }, { passive: true });
     }
 }
 
@@ -264,6 +326,10 @@ if (carouselContainer) {
 window.addEventListener('resize', () => {
     updateCarousel();
     updateCarouselDots();
+    // Reset forced display if leaving mobile
+    if (!isMobile() && navMenu) {
+        navMenu.style.display = '';
+    }
 });
 
 // Smooth scrolling for anchor links
@@ -340,9 +406,11 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll(
-        '.timeline__item, .course__card, .sponsor__placeholder'
-    );
+    // Avoid hiding minicourse cards on small screens to ensure visibility
+    const selector = isMobile()
+        ? '.timeline__item, .sponsor__placeholder'
+        : '.timeline__item, .course__card, .sponsor__placeholder';
+    const animatedElements = document.querySelectorAll(selector);
     
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -398,6 +466,9 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
         navMenu.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        navMenu.style.display = '';
+        navToggle.setAttribute('aria-expanded', 'false');
+        navMenu.setAttribute('aria-hidden', 'true');
         const icon = navToggle.querySelector('i');
         icon.classList.remove('fa-times');
         icon.classList.add('fa-bars');
@@ -425,6 +496,9 @@ document.addEventListener('click', (e) => {
     if (navMenu.classList.contains('active') && !clickedInsideMenu && !clickedToggle) {
         navMenu.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        navMenu.style.display = '';
+        navToggle.setAttribute('aria-expanded', 'false');
+        navMenu.setAttribute('aria-hidden', 'true');
         const icon = navToggle.querySelector('i');
         icon.classList.remove('fa-times');
         icon.classList.add('fa-bars');

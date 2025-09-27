@@ -16,24 +16,22 @@
             <div class="nav__container">
                 <div class="nav__logo">
                     <img src="logo_ieee.png" alt="IEEE USP São Carlos" class="logo">
-                    <span class="logo-text">V SANCA Week</span>
                 </div>
-                <div class="nav__menu" id="nav-menu">
+                <div class="nav__menu" id="nav-menu" aria-hidden="true">
                     <ul class="nav__list">
-                        <li class="nav__item"><a href="index.html" class="nav__link">Início</a></li>
-                        <li class="nav__item"><a href="index.html#minicursos" class="nav__link">Minicursos</a></li>
+                        
                         <li class="nav__item"><a href="index.html#programacao" class="nav__link">Programação</a></li>
                         <li class="nav__item"><a href="palestrantes.html" class="nav__link nav__link--active">Palestrantes</a></li>
-                        <li class="nav__item"><a href="index.html#patrocinadores" class="nav__link">Patrocinadores</a></li>
-                        <li class="nav__item">
-                            <a href="https://forms.gle/aMK1hvbaZCUwbRPHA" target="_blank" class="nav__link nav__cta">
-                                Inscrever-se
-                            </a>
+                        <li class="nav__item nav__item--mobile-cta">
+                            <a href="inscricoes.html" class="nav__link nav__cta nav__cta--mobile">Inscrever-se</a>
                         </li>
                     </ul>
                 </div>
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="fas fa-bars"></i>
+                <div class="nav__actions">
+                    <a href="inscricoes.html" class="nav__cta nav__cta--desktop">Inscrever-se</a>
+                    <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -68,214 +66,64 @@
         <!-- Speakers Grid -->
         <section class="speakers-grid">
             <div class="container">
-                
-                <!-- Speaker 1: Lucas Pascotti Valem -->
-                <div class="speaker-card" data-speaker="lucas">
+                <div class="speaker-card" data-speaker="alexandre">
                     <div class="speaker-card__image">
-                        <img src="fotolucas.png" alt="Lucas Pascotti Valem" class="speaker__photo">
-                        <div class="speaker-card__overlay">
-                            <div class="speaker-card__social">
-                                <a href="#" class="social-link" aria-label="LinkedIn">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Research">
-                                    <i class="fas fa-graduation-cap"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Email">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                            </div>
-                        </div>
+                        <img src="image/palestrantes/alexandre.jpg" alt="Alexandre Lyra" class="speaker__photo">
                     </div>
-                    
                     <div class="speaker-card__content">
-                        <h3 class="speaker-card__name">Lucas Pascotti Valem</h3>
-                        <p class="speaker-card__title">Professor Doutor - ICMC-USP</p>
+                        <h3 class="speaker-card__name">Alexandre Lyra</h3>
+                        <p class="speaker-card__title">CEO da Reframax · Ex-CEO da Vallourec e CSN</p>
                         <p class="speaker-card__description">
-                            Professor Doutor no Departamento de Ciência da Computação do ICMC-USP. 
-                            Possui doutorado em Ciência da Computação pela UNESP, com período sanduíche 
-                            na Temple University (EUA) via bolsa Fulbright.
+                            Executivo com mais de 30 anos liderando transformações industriais e digitais. Em sua
+                            palestra &ldquo;Visão das Tecnologias que Estão Redesenhando o Futuro&rdquo;, apresenta tendências
+                            que estão revolucionando operações, sustentabilidade e novos modelos de negócio.
                         </p>
-                        
                         <div class="speaker-card__expertise">
-                            <span class="expertise-tag">Visão Computacional</span>
-                            <span class="expertise-tag">Machine Learning</span>
-                            <span class="expertise-tag">Processamento de Imagens</span>
-                            <span class="expertise-tag">Recuperação de Informação</span>
+                            <span class="expertise-tag">Inovação Industrial</span>
+                            <span class="expertise-tag">Transformação Digital</span>
+                            <span class="expertise-tag">Liderança Estratégica</span>
                         </div>
-                        
-                        <button class="speaker-card__expand" data-target="lucas">
-                            <span class="expand-text">Saiba Mais</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
                     </div>
                 </div>
 
-                <!-- Speaker Details - Lucas -->
-                <div class="speaker-details" id="speaker-lucas">
-                    <div class="speaker-details__content">
-                        <div class="speaker-details__header">
-                            <img src="fotolucas.png" alt="Lucas Pascotti Valem" class="speaker-details__photo">
-                            <div class="speaker-details__info">
-                                <h2>Lucas Pascotti Valem</h2>
-                                <p class="speaker-details__position">Professor Doutor - ICMC-USP</p>
-                                <div class="speaker-details__social">
-                                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="fas fa-graduation-cap"></i></a>
-                                    <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="speaker-details__bio">
-                            <h3>Biografia</h3>
-                            <p>
-                                Lucas Pascotti Valem é Professor Doutor no Departamento de Ciência da Computação 
-                                do ICMC-USP. Possui doutorado em Ciência da Computação pela UNESP, com período 
-                                sanduíche na Temple University (EUA) via bolsa Fulbright.
-                            </p>
-                            <p>
-                                Atua em pesquisa nas áreas de visão computacional, aprendizado de máquina, 
-                                recuperação de informação e processamento de imagens, com projetos aplicados 
-                                em parceria com empresas como a Petrobras.
-                            </p>
-                        </div>
-                        
-                        <div class="speaker-details__research">
-                            <h3>Áreas de Pesquisa</h3>
-                            <ul>
-                                <li>Visão Computacional e Análise de Imagens</li>
-                                <li>Aprendizado de Máquina e Deep Learning</li>
-                                <li>Recuperação de Informação Multimídia</li>
-                                <li>Processamento Digital de Imagens</li>
-                                <li>Sistemas de Recomendação Visuais</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="speaker-details__talk">
-                            <h3>Palestra</h3>
-                            <div class="talk-info">
-                                <h4>Título a ser definido</h4>
-                                <p class="talk-description">
-                                    Detalhes sobre a palestra serão adicionados em breve.
-                                </p>
-                                <div class="talk-meta">
-                                    <span class="talk-date"><i class="fas fa-calendar"></i> A definir</span>
-                                    <span class="talk-time"><i class="fas fa-clock"></i> A definir</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="speaker-details__close" data-target="lucas">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Speaker 2: Mariangela Diório -->
                 <div class="speaker-card" data-speaker="mariangela">
                     <div class="speaker-card__image">
-                        <img src="mariangela.png" alt="Mariangela Diório" class="speaker__photo">
-                        <div class="speaker-card__overlay">
-                            <div class="speaker-card__social">
-                                <a href="#" class="social-link" aria-label="LinkedIn">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Website">
-                                    <i class="fas fa-globe"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Email">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                            </div>
-                        </div>
+                        <img src="image/palestrantes/mariangela.png" alt="Mariângela Diório" class="speaker__photo">
                     </div>
-                    
                     <div class="speaker-card__content">
-                        <h3 class="speaker-card__name">Mariangela Diório</h3>
-                        <p class="speaker-card__title">Diretora de Gestão de Pessoas - Reframax</p>
+                        <h3 class="speaker-card__name">Mariângela Diório</h3>
+                        <p class="speaker-card__title">Diretora de Gestão de Pessoas · Reframax</p>
                         <p class="speaker-card__description">
-                            Diretora de Gestão de Pessoas e Comunicação na Reframax. Atua com foco em 
-                            engajamento, cultura organizacional e comunicação estratégica, promovendo 
-                            iniciativas para criar ambientes de trabalho mais integrados.
+                            Especialista em cultura organizacional e desenvolvimento de talentos. No talk
+                            &ldquo;Do Estágio à Liderança&rdquo;, compartilha as habilidades humanas e técnicas que o novo
+                            mercado exige para acelerar a carreira.
                         </p>
-                        
                         <div class="speaker-card__expertise">
                             <span class="expertise-tag">Gestão de Pessoas</span>
                             <span class="expertise-tag">Cultura Organizacional</span>
                             <span class="expertise-tag">Comunicação Estratégica</span>
-                            <span class="expertise-tag">Engajamento</span>
                         </div>
-                        
-                        <button class="speaker-card__expand" data-target="mariangela">
-                            <span class="expand-text">Saiba Mais</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
                     </div>
                 </div>
 
-                <!-- Speaker Details - Mariangela -->
-                <div class="speaker-details" id="speaker-mariangela">
-                    <div class="speaker-details__content">
-                        <div class="speaker-details__header">
-                            <img src="mariangela.png" alt="Mariangela Diório" class="speaker-details__photo">
-                            <div class="speaker-details__info">
-                                <h2>Mariangela Diório</h2>
-                                <p class="speaker-details__position">Diretora de Gestão de Pessoas - Reframax</p>
-                                <div class="speaker-details__social">
-                                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="fas fa-globe"></i></a>
-                                    <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-                                </div>
-                            </div>
+                <div class="speaker-card" data-speaker="lucas">
+                    <div class="speaker-card__image">
+                        <img src="image/palestrantes/fotolucas.png" alt="Lucas Pascotti Valem" class="speaker__photo">
+                    </div>
+                    <div class="speaker-card__content">
+                        <h3 class="speaker-card__name">Lucas Pascotti Valem</h3>
+                        <p class="speaker-card__title">Professor Doutor · ICMC-USP</p>
+                        <p class="speaker-card__description">
+                            Pesquisador em visão computacional e aprendizado de máquina com colaboração internacional.
+                            Conduz estudos aplicados que unem IA, processamento de imagens e recuperação de informação.
+                        </p>
+                        <div class="speaker-card__expertise">
+                            <span class="expertise-tag">Visão Computacional</span>
+                            <span class="expertise-tag">Machine Learning</span>
+                            <span class="expertise-tag">Processamento de Imagens</span>
                         </div>
-                        
-                        <div class="speaker-details__bio">
-                            <h3>Biografia</h3>
-                            <p>
-                                Mariângela Diório é Diretora de Gestão de Pessoas e Comunicação na Reframax. 
-                                Ela atua com foco em engajamento, cultura organizacional e comunicação estratégica, 
-                                promovendo iniciativas para criar ambientes de trabalho mais integrados e com forte 
-                                sentido de pertencimento.
-                            </p>
-                            <p>
-                                Com vasta experiência em recursos humanos e desenvolvimento organizacional, 
-                                Mariângela tem sido fundamental na transformação de culturas empresariais e 
-                                no desenvolvimento de estratégias de comunicação interna eficazes.
-                            </p>
-                        </div>
-                        
-                        <div class="speaker-details__research">
-                            <h3>Áreas de Especialização</h3>
-                            <ul>
-                                <li>Gestão de Pessoas e Talentos</li>
-                                <li>Desenvolvimento de Cultura Organizacional</li>
-                                <li>Comunicação Interna e Externa</li>
-                                <li>Estratégias de Engajamento</li>
-                                <li>Transformação Organizacional</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="speaker-details__talk">
-                            <h3>Palestra</h3>
-                            <div class="talk-info">
-                                <h4>Título a ser definido</h4>
-                                <p class="talk-description">
-                                    Detalhes sobre a palestra serão adicionados em breve.
-                                </p>
-                                <div class="talk-meta">
-                                    <span class="talk-date"><i class="fas fa-calendar"></i> A definir</span>
-                                    <span class="talk-time"><i class="fas fa-clock"></i> A definir</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="speaker-details__close" data-target="mariangela">
-                            <i class="fas fa-times"></i>
-                        </button>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -285,7 +133,7 @@
                 <div class="cta-content">
                     <h2>Não perca essa oportunidade</h2>
                     <p>Inscreva-se agora e garante sua presença nas palestras dos nossos especialistas</p>
-                    <a href="https://forms.gle/aMK1hvbaZCUwbRPHA" target="_blank" class="btn btn--primary btn--large">
+                    <a href="inscricoes.html" class="btn btn--primary btn--large">
                         <i class="fas fa-user-plus"></i>
                         Fazer Inscrição
                     </a>

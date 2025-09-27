@@ -16,20 +16,20 @@
                 <div class="nav__logo">
                     <img src="logo_ieee.png" alt="IEEE USP São Carlos" class="logo">
                 </div>
-                <div class="nav__menu" id="nav-menu">
+                <div class="nav__menu" id="nav-menu" aria-hidden="true">
                     <ul class="nav__list">
-                        <li class="nav__item"><a href="#home" class="nav__link">Início</a></li>
-                        <li class="nav__item"><a href="#minicursos" class="nav__link">Minicursos</a></li>
                         <li class="nav__item"><a href="#programacao" class="nav__link">Programação</a></li>
                         <li class="nav__item"><a href="palestrantes.html" class="nav__link">Palestrantes</a></li>
-                        <li class="nav__item"><a href="#patrocinadores" class="nav__link">Patrocinadores</a></li>
-                        <li class="nav__item">
-                            <a href="inscricoes.html" class="nav__link nav__cta">Inscrever-se</a>
+                        <li class="nav__item nav__item--mobile-cta">
+                            <a href="inscricoes.html" class="nav__link nav__cta nav__cta--mobile">Inscrever-se</a>
                         </li>
                     </ul>
                 </div>
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="fas fa-bars"></i>
+                <div class="nav__actions">
+                    <a href="inscricoes.html" class="nav__cta nav__cta--desktop">Inscrever-se</a>
+                    <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -91,101 +91,7 @@
             </div>
         </section>
 
-        <!-- Minicursos Section -->
-        <section class="minicursos" id="minicursos">
-            <div class="container">
-                <h2 class="section__title">Minicursos</h2>
-                <p class="section__subtitle">Explore nossos minicursos práticos e inovadores</p>
-                
-                <div class="carousel">
-                    <div class="carousel__container" id="carousel-container">
-                        <div class="carousel__slide">
-                            <div class="course__card">
-                                <img src="imagem1.png" alt="SanCode Challenge" class="course__image">
-                                <div class="course__content">
-                                    <h3 class="course__title">SanCode Challenge</h3>
-                                    <div class="course__meta">11 de outubro • 14h – 18h</div>
-                                    <p class="course__description" aria-hidden="true"></p>
-                                    <a class="btn btn--secondary" href="hackathon.html" aria-label="Saiba mais sobre o SanCode Challenge">Saiba Mais</a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="carousel__slide">
-                            <div class="course__card">
-                                <img src="imagem2.png" alt="Minicurso 2" class="course__image">
-                                <div class="course__content">
-                                    <h3 class="course__title">Minicurso 2</h3>
-                                    <p class="course__description">Descrição do segundo minicurso será adicionada aqui</p>
-                                    <button class="btn btn--secondary">Saiba Mais</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="carousel__slide">
-                            <div class="course__card">
-                                <img src="imagem3.png" alt="Minicurso 3" class="course__image">
-                                <div class="course__content">
-                                    <h3 class="course__title">Minicurso 3</h3>
-                                    <p class="course__description">Descrição do terceiro minicurso será adicionada aqui</p>
-                                    <button class="btn btn--secondary">Saiba Mais</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="carousel__slide">
-                            <div class="course__card">
-                                <img src="imagem4.png" alt="Minicurso 4" class="course__image">
-                                <div class="course__content">
-                                    <h3 class="course__title">Minicurso 4</h3>
-                                    <p class="course__description">Descrição do quarto minicurso será adicionada aqui</p>
-                                    <button class="btn btn--secondary">Saiba Mais</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="carousel__slide">
-                            <div class="course__card">
-                                <img src="imagem5.png" alt="Minicurso 5" class="course__image">
-                                <div class="course__content">
-                                    <h3 class="course__title">Minicurso 5</h3>
-                                    <p class="course__description">Descrição do quinto minicurso será adicionada aqui</p>
-                                    <button class="btn btn--secondary">Saiba Mais</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="carousel__slide">
-                            <div class="course__card">
-                                <img src="imagem6.png" alt="Minicurso 6" class="course__image">
-                                <div class="course__content">
-                                    <h3 class="course__title">Minicurso 6</h3>
-                                    <p class="course__description">Descrição do sexto minicurso será adicionada aqui</p>
-                                    <button class="btn btn--secondary">Saiba Mais</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="carousel__controls">
-                        <button class="carousel__btn carousel__btn--prev" id="prevBtn">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="carousel__btn carousel__btn--next" id="nextBtn">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="carousel__dots" id="carousel-dots"></div>
-                </div>
-
-                <div class="section__cta">
-                    <a href="inscricoes.html" class="btn btn--primary">
-                        Inscrever-se nos Minicursos
-                    </a>
-                </div>
-            </div>
-        </section>
+        
 
         
 
@@ -196,141 +102,197 @@
                 <p class="section__subtitle">Acompanhe as atrações de cada dia</p>
 
                 <div class="tabs">
-                    <button class="tab active" data-day="dia1">Dia 1</button>
-                    <button class="tab" data-day="dia2">Dia 2</button>
-                    <button class="tab" data-day="dia3">Dia 3</button>
-                    <button class="tab" data-day="dia4">Dia 4</button>
-                    <button class="tab" data-day="dia5">Dia 5</button>
+                    <button class="tab active" data-day="dia1">Terça</button>
+                    <button class="tab" data-day="dia2">Quarta</button>
+                    <button class="tab" data-day="dia3">Quinta</button>
+                    <button class="tab" data-day="dia4">Sexta</button>
+                    <button class="tab" data-day="dia5">Sábado</button>
                 </div>
 
                 <!-- Dia 1: Cards por horário -->
                 <div class="day-panel active" id="dia1">
                     <div class="schedule">
                         <article class="slot">
-                            <div class="slot__media"><img src="emergente.jpg" alt="Perspectivas globais das tecnologias emergentes" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/abertura.png" alt="Abertura oficial da V SANCA Week" loading="lazy"></div>
                             <div class="slot__content">
-                                <time class="slot__time">16h</time>
-                                <h3 class="slot__title">Palestra: Perspectivas globais das tecnologias emergentes</h3>
-                                <p class="slot__desc">Uma visão internacional sobre as tecnologias que estão moldando o futuro e seus impactos na sociedade e na indústria.</p>
+                                <time class="slot__time">16h00</time>
+                                <h3 class="slot__title">Abertura Oficial</h3>
+                                <p class="slot__desc">Recepção aos participantes, apresentação da programação e mensagem das lideranças do evento.</p>
                             </div>
                         </article>
 
                         <article class="slot">
-                            <div class="slot__media"><img src="algoritmo.png" alt="Otimização de algoritmos" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/palestraRFX1.jpg" alt="Alexandre Lyra durante palestra sobre tecnologias do futuro" loading="lazy"></div>
                             <div class="slot__content">
-                                <time class="slot__time">18h30</time>
-                                <h3 class="slot__title">Palestra: Otimização de algoritmos</h3>
-                                <p class="slot__desc">Estratégias e técnicas para reduzir tempo e custo computacional em problemas reais.</p>
+                                <time class="slot__time">16h30 – 18h00</time>
+                                <h3 class="slot__title">Visão das Tecnologias que Estão Redesenhando o Futuro</h3>
+                                <p class="slot__desc">Alexandre Lyra, CEO da REFRAMAX e ex-CEO da Vallourec e CSN, sobre as tendências que estão transformando a indústria e os Negócios.</p>
                             </div>
                         </article>
 
                         <article class="slot">
-                            <div class="slot__media"><img src="coffee.png" alt="Coffee break" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/brindes1.png" alt="Intervalo com sorteio de brindes" loading="lazy"></div>
                             <div class="slot__content">
-                                <time class="slot__time">19h</time>
-                                <h3 class="slot__title">Coffee break</h3>
-                                <p class="slot__desc">Pausa para networking e um café.</p>
+                                <time class="slot__time">18h00 – 18h50</time>
+                                <h3 class="slot__title">Intervalo & Sorteio de Brindes</h3>
+                                <p class="slot__desc">Momento para networking, confraternização e sorteio de brindes especiais para os participantes.</p>
                             </div>
                         </article>
 
                         <article class="slot">
-                            <div class="slot__media"><img src="sorteio.png" alt="Sorteio de brindes" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/palestraRFX2.png" alt="Mariângela Diório em apresentação" loading="lazy"></div>
                             <div class="slot__content">
-                                <time class="slot__time">19h30</time>
-                                <h3 class="slot__title">Sorteio de brindes</h3>
-                                <p class="slot__desc">Participe e concorra a brindes exclusivos do evento.</p>
+                                <time class="slot__time">19h00 – 20h30</time>
+                                <h3 class="slot__title">Do Estágio à Liderança: Habilidades que o Novo Mercado Exige</h3>
+                                <p class="slot__desc">Mariângela Diório, diretora de Gestão de Pessoas na Reframax, apresenta competências essenciais para evoluir na carreira.</p>
                             </div>
                         </article>
 
                         <article class="slot">
-                            <div class="slot__media"><img src="palestraRH.png" alt="O profissional no novo mundo de trabalho" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/coffee.png" alt="Coffee break de encerramento" loading="lazy"></div>
                             <div class="slot__content">
-                                <time class="slot__time">20h</time>
-                                <h3 class="slot__title">Palestra: O profissional no novo mundo de trabalho</h3>
-                                <p class="slot__desc">Competências e tendências para se destacar em um mercado em constante transformação.</p>
+                                <time class="slot__time">20h30 – 21h30</time>
+                                <h3 class="slot__title">Encerramento & Coffee Break</h3>
+                                <p class="slot__desc">Fechamento das atividades do dia com coffee break especial e espaço para continuar as conexões.</p>
                             </div>
                         </article>
                     </div>
                 </div>
 
-                <!-- Dia 2 -->
+                <!-- Dia 2 - Quarta -->
                 <div class="day-panel" id="dia2">
                     <div class="schedule">
                         <article class="slot">
-                            <div class="slot__media"><img src="algoritmo.png" alt="Palestra online CS" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/embs.jpg" alt="Palestra EMBS com MTB" loading="lazy"></div>
                             <div class="slot__content">
-                                <time class="slot__time">16h</time>
-                                <h3 class="slot__title">Palestra online CS</h3>
-                                <p class="slot__desc">Sessão remota da Computer Society com tópicos atuais da área.</p>
+                                <time class="slot__time">19h00</time>
+                                <h3 class="slot__title">Palestra EMBS com MTB</h3>
+                                <p class="slot__desc">Apresentação especial da Engineering in Medicine & Biology Society sobre tecnologias médicas e biomédicas.</p>
                             </div>
                         </article>
 
                         <article class="slot">
-                            <div class="slot__media"><img src="coffee.png" alt="Coffee break" loading="lazy"></div>
-                            <div class="slot__content">
-                                <time class="slot__time">—</time>
-                                <h3 class="slot__title">Coffee break</h3>
-                                <p class="slot__desc">Pausa para networking e um café.</p>
-                            </div>
-                        </article>
-
-                        <article class="slot">
-                            <div class="slot__media"><img src="sorteio.png" alt="Sorteio de brindes" loading="lazy"></div>
-                            <div class="slot__content">
-                                <time class="slot__time">—</time>
-                                <h3 class="slot__title">Sorteio de brindes</h3>
-                                <p class="slot__desc">Participe e concorra a brindes exclusivos do evento.</p>
-                            </div>
-                        </article>
-
-                        <article class="slot">
-                            <div class="slot__media"><img src="emergente.jpg" alt="EMBS Startup" loading="lazy"></div>
-                            <div class="slot__content">
-                                <time class="slot__time">19h</time>
-                                <h3 class="slot__title">Palestra EMBS Startup</h3>
-                                <p class="slot__desc">Ecossistema de startups em engenharia biomédica.</p>
-                            </div>
-                        </article>
-
-                        <article class="slot">
-                            <div class="slot__media"><img src="emergente.jpg" alt="Tecnologias Quânticas" loading="lazy"></div>
+                            <div class="slot__media"><img src="image/palestras e MC/computacaoquantica.png" alt="Tecnologias Quânticas" loading="lazy"></div>
                             <div class="slot__content">
                                 <time class="slot__time">20h30</time>
                                 <h3 class="slot__title">Palestra: Tecnologias Quânticas</h3>
-                                <p class="slot__desc">Introdução prática aos avanços e aplicações de tecnologias quânticas.</p>
+                                <p class="slot__desc">Introdução prática aos avanços e aplicações de tecnologias quânticas na computação moderna.</p>
                             </div>
                         </article>
                     </div>
                 </div>
-                <div class="day-panel" id="dia3"><p>Em breve…</p></div>
-                <div class="day-panel" id="dia4"><p>Em breve…</p></div>
-                <div class="day-panel" id="dia5"><p>Em breve…</p></div>
+
+                <!-- Dia 3 - Quinta -->
+                <div class="day-panel" id="dia3">
+                    <div class="schedule">
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/redesneurais.png" alt="Uso de redes neurais em Sistemas Elétricos" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">16h20</time>
+                                <h3 class="slot__title">Uso de Redes Neurais em Sistemas Elétricos de Potência</h3>
+                                <p class="slot__desc">Prof. Ricardo Fernandes apresenta aplicações de inteligência artificial em sistemas de energia elétrica.</p>
+                            </div>
+                        </article>
+
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/drones.png" alt="Uso de drones para sensoreamento ambiental" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">17h30</time>
+                                <h3 class="slot__title">Uso de Drones para Sensoreamento Ambiental Remoto</h3>
+                                <p class="slot__desc">Prof. Glauco Carin explora as aplicações de drones na monitoração e análise ambiental.</p>
+                            </div>
+                        </article>
+
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/ribeirinhas.png" alt="Projeto SIGHT Comunidade Ribeirinha" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">18h30</time>
+                                <h3 class="slot__title">Grupo SIGHT: Painéis Fotovoltaicos em Comunidade Ribeirinha</h3>
+                                <p class="slot__desc">Rui Cantuária e Pedro Guedes apresentam projeto de instalação de energia solar no Amazonas.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Dia 4 - Sexta -->
+                <div class="day-panel" id="dia4">
+                    <div class="schedule">
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/computacaoquantica.png" alt="Minicurso de Computação Quântica" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">14h00 – 18h00</time>
+                                <h3 class="slot__title">Minicurso de Computação Quântica</h3>
+                                <p class="slot__desc">Workshop prático sobre os fundamentos e aplicações da computação quântica.</p>
+                                <button class="btn btn--secondary" type="button">Saiba Mais</button>
+                            </div>
+                        </article>
+
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/fibraotica.png" alt="Minicurso de Fibra Ótica" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">15h00 – 17h00</time>
+                                <h3 class="slot__title">Minicurso de Fibra Ótica</h3>
+                                <p class="slot__desc">Curso prático no laboratório do IFSC sobre tecnologias de comunicação óptica.</p>
+                                <button class="btn btn--secondary" type="button">Saiba Mais</button>
+                            </div>
+                        </article>
+
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/broa.jpeg" alt="Visita à Hidrelétrica do Broa" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">Todo o dia</time>
+                                <h3 class="slot__title">Visita à Hidrelétrica do Broa</h3>
+                                <p class="slot__desc">Excursão técnica para conhecer as instalações e operação da usina hidrelétrica.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Dia 5 - Sábado -->
+                <div class="day-panel" id="dia5">
+                    <div class="schedule">
+                        <article class="slot">
+                            <div class="slot__media"><img src="image/palestras e MC/cschallenge.png" alt="SC Challenge - Competição de Programação" loading="lazy"></div>
+                            <div class="slot__content">
+                                <time class="slot__time">14h00 – 18h00</time>
+                                <h3 class="slot__title">SC Challenge</h3>
+                                <p class="slot__desc">Competição de programação da Computer Society. Desafie suas habilidades e concorra a prêmios exclusivos!</p>
+                                <a class="btn btn--secondary" href="hackathon.html">Saiba Mais</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Patrocinadores Section -->
         <section class="patrocinadores" id="patrocinadores">
             <div class="container">
-                <h2 class="section__title">Patrocinadores</h2>
-                <p class="section__subtitle">Apoiadores que tornam este evento possível</p>
+                <h2 class="section__title">Patrocinador Ouro</h2>
+                <p class="section__subtitle">Apoiador que tornou este evento possível</p>
                 
-                <div class="sponsors">
-                    <div class="sponsors__tier sponsors__tier--gold">
-                        <h3 class="sponsors__title">Patrocinador Ouro</h3>
-                        <div class="sponsors__grid sponsors__grid--gold">
-                            <div class="sponsor__item">
-                                <img src="logo_reframax.svg" alt="Reframax" class="sponsor__logo" />
-                            </div>
-                        </div>
+                <div class="sponsors__grid sponsors__grid--gold">
+                    <div class="sponsor__item">
+                        <img src="logo_reframax.svg" alt="Reframax" class="sponsor__logo" />
                     </div>
-                    
-                    
-                    
-                    <div class="sponsors__tier">
+                </div>
+
+                <div class="sponsors__tier">
                         <h3 class="sponsors__title">Apoio</h3>
-                        <div class="sponsors__grid sponsors__grid--bronze">
-                            <div class="sponsor__placeholder">
-                                <p>Em breve</p>
+                        <div class="sponsors__panel sponsors__panel--apoio">
+                            <div class="sponsors__grid sponsors__grid--bronze">
+                                <div class="sponsor__item">
+                                    <img src="image/apoiadores/usp-eesc-grande.png" alt="USP EESC" class="sponsor__logo sponsor__logo--grande" />
+                                </div>
+                                <div class="sponsor__item">
+                                    <img src="image/apoiadores/logoieee-médio.webp" alt="IEEE" class="sponsor__logo sponsor__logo--medio" />
+                                </div>
+                                <div class="sponsor__item">
+                                    <img src="image/apoiadores/Logo-EESC-jr-médio.png" alt="EESC Jr" class="sponsor__logo sponsor__logo--medio" />
+                                </div>
+                                <div class="sponsor__item">
+                                    <img src="image/apoiadores/ieee-embs-pequeno.png" alt="IEEE EMBS" class="sponsor__logo sponsor__logo--pequeno" />
+                                </div>
                             </div>
                         </div>
                     </div>
