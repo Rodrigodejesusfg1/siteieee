@@ -70,7 +70,7 @@ document.addEventListener('keydown', (e) => {
     const activeModal = document.querySelector('.speaker-details.active');
     if (activeModal) {
         const currentId = activeModal.id.replace('speaker-', '');
-        const speakerIds = ['lucas', 'mariangela']; // Add more as needed
+        const speakerIds = ['alexandre', 'mariangela', 'lucas', 'ricardo', 'rui', 'pedro'];
         const currentIndex = speakerIds.indexOf(currentId);
         
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -87,34 +87,13 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// MIT Media Lab Style Scroll Effects
+// MIT Media Lab Style Scroll Effects (disabled: cards visible by default)
 function initScrollEffects() {
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0) translateX(0)';
-                
-                // Stagger animation for speaker cards
-                if (entry.target.classList.contains('speaker-card')) {
-                    const delay = Array.from(speakerCards).indexOf(entry.target) * 200;
-                    entry.target.style.transitionDelay = `${delay}ms`;
-                }
-            }
-        });
-    }, observerOptions);
-    
-    // Observe speaker cards
     speakerCards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(50px)';
-        card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-        observer.observe(card);
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+        card.style.transition = '';
+        card.style.transitionDelay = '';
     });
 }
 

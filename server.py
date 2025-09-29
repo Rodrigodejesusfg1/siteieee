@@ -198,6 +198,56 @@ def submit_hackathon():
         logger.error(f"General error in submit_hackathon: {e}")
         return jsonify({'success': False, 'message': 'Erro interno do servidor'}), 500
 
+@app.route('/api/minicurso-fibra', methods=['POST'])
+def submit_minicurso_fibra():
+    """Handle minicurso Fibra Óptica registrations"""
+    try:
+        logger.info(f"Received minicurso fibra submission from IP: {request.remote_addr}")
+        data = request.form if request.form else request.json
+
+        if not data:
+            logger.warning("Nenhum dado recebido para minicurso fibra")
+            return jsonify({'success': False, 'message': 'Nenhum dado recebido'}), 400
+
+        if data.get('_hp'):
+            logger.warning("Tentativa de spam detectada no minicurso fibra")
+            return jsonify({'success': False, 'message': 'Erro de validação'}), 400
+
+        nome = data.get('nome', '').strip()
+        telefone = data.get('telefone', '').strip()
+        nusp = data.get('nusp', '').strip() if data.get('nusp') else None
+
+        if not nome or not telefone:
+            logger.warning("Campos obrigatórios faltando no minicurso fibra")
+            return jsonify({'success': False, 'message': 'Informe nome completo e telefone.'}), 400
+
+        supabase = get_supabase_client()
+        if not supabase:
+            logger.error("Falha ao conectar ao Supabase para minicurso fibra")
+            return jsonify({'success': False, 'message': 'Erro de conexão com o banco de dados'}), 500
+
+        payload = {
+            'nome': nome,
+            'telefone': telefone,
+            'nusp': nusp if nusp else None
+        }
+
+        try:
+            result = supabase.table('minicurso_fibra_inscricoes').insert(payload).execute()
+            if result.data:
+                registro_id = result.data[0]['id']
+                logger.info(f"Inscrição do minicurso fibra salva com ID {registro_id}")
+                return jsonify({'success': True, 'message': 'Inscrição registrada com sucesso!', 'id': registro_id}), 200
+            logger.error("Nenhum dado retornado na inserção do minicurso fibra")
+            return jsonify({'success': False, 'message': 'Erro ao salvar dados'}), 500
+        except Exception as db_error:
+            logger.error(f"Erro Supabase minicurso fibra: {db_error}")
+            return jsonify({'success': False, 'message': 'Erro ao salvar dados no banco'}), 500
+
+    except Exception as e:
+        logger.error(f"Erro geral no minicurso fibra: {e}")
+        return jsonify({'success': False, 'message': 'Erro interno do servidor'}), 500
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""

@@ -43,7 +43,7 @@
       <div class="hero__container">
         <div class="hero__content">
           <h1 class="hero__title">
-            <span class="hero__main-title">SanCode Challenge</span>
+            <span class="hero__main-title">CS Challenge</span>
             <span class="hero__date">11 de Outubro • 14h – 18h</span>
             <span class="hero__location">Competição de Programação</span>
           </h1>
@@ -86,40 +86,63 @@
           <input type="text" name="_hp" id="_hp_h" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;" />
           <div class="form__grid">
             <div class="form__group form__group--full">
-              <label for="nome1">Nome do integrante 1 (Líder)</label>
-              <input type="text" id="nome1" name="nome1" required autocomplete="name">
+              <label for="teamName">Nome da Equipe (Obrigatório)</label>
+              <input type="text" id="teamName" name="team_name" required autocomplete="organization">
             </div>
             <div class="form__group form__group--full">
-              <label for="nome2">Nome do integrante 2</label>
-              <input type="text" id="nome2" name="nome2" required autocomplete="name">
+              <label for="leaderName">Nome completo do membro responsável pela inscrição (Obrigatório)</label>
+              <input type="text" id="leaderName" name="leader_name" required autocomplete="name">
             </div>
             <div class="form__group form__group--full">
-              <label for="nome3">Nome do integrante 3</label>
-              <input type="text" id="nome3" name="nome3" required autocomplete="name">
+              <label for="leaderEmail">E-mail do membro responsável pela inscrição (Obrigatório)</label>
+              <input type="email" id="leaderEmail" name="leader_email" required autocomplete="email">
             </div>
 
             <div class="form__group">
-              <label for="nusp1">NUSP (se tiver)</label>
-              <input type="text" id="nusp1" name="nusp1" pattern="[0-9]*" inputmode="numeric" placeholder="Opcional" autocomplete="off">
+              <label for="leaderUniversity">Universidade em que o membro responsável está matriculado (Obrigatório)</label>
+              <input type="text" id="leaderUniversity" name="leader_university" required autocomplete="organization">
             </div>
             <div class="form__group">
-              <label for="nusp2">NUSP (se tiver)</label>
-              <input type="text" id="nusp2" name="nusp2" pattern="[0-9]*" inputmode="numeric" placeholder="Opcional" autocomplete="off">
+              <label for="member2Name">Nome completo do segundo membro</label>
+              <input type="text" id="member2Name" name="member2_name" autocomplete="name" placeholder="Opcional">
             </div>
             <div class="form__group">
-              <label for="nusp3">NUSP (se tiver)</label>
-              <input type="text" id="nusp3" name="nusp3" pattern="[0-9]*" inputmode="numeric" placeholder="Opcional" autocomplete="off">
+              <label for="member2Email">E-mail do segundo membro</label>
+              <input type="email" id="member2Email" name="member2_email" autocomplete="email" placeholder="Opcional">
             </div>
 
 
             <div class="form__group">
-              <label for="celular">Celular do líder</label>
-              <input type="tel" id="celular" name="celular" placeholder="(xx) xxxxx-xxxx" required inputmode="tel" autocomplete="tel">
+              <label for="member2University">Universidade em que o segundo membro está matriculado</label>
+              <input type="text" id="member2University" name="member2_university" autocomplete="organization" placeholder="Opcional">
             </div>
             <div class="form__group">
-              <label for="email">Email do líder</label>
-              <input type="email" id="email" name="email" required autocomplete="email">
+              <label for="member3Name">Nome completo do terceiro membro</label>
+              <input type="text" id="member3Name" name="member3_name" autocomplete="name" placeholder="Opcional">
             </div>
+            <div class="form__group">
+              <label for="member3Email">E-mail do terceiro membro</label>
+              <input type="email" id="member3Email" name="member3_email" autocomplete="email" placeholder="Opcional">
+            </div>
+            <div class="form__group">
+              <label for="member3University">Universidade em que o terceiro membro está matriculado</label>
+              <input type="text" id="member3University" name="member3_university" autocomplete="organization" placeholder="Opcional">
+            </div>
+          </div>
+
+          <p class="form__note">
+            *Nota: Caso você ou algum membro não esteja matriculado em uma universidade, responda “N/A”.
+          </p>
+
+          <p class="form__note form__note--alert">
+            Em caso de desistência, favor entrar em contato conosco com antecedência!
+          </p>
+
+          <div class="form__group form__group--full form__group--checkbox">
+            <label for="terms" class="checkbox">
+              <input type="checkbox" id="terms" name="terms" required>
+              <span>Eu concordo com os <a href="https://docs.google.com/document/d/11IALlAHKtCcbZgv1qcvFCfTIUwc24jIE/edit?usp=sharing&ouid=113285015651243691732&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">termos de uso</a>.</span>
+            </label>
           </div>
 
           <div class="form__actions">

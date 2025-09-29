@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscrição confirmada • Minicurso de Fibra Óptica</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <div class="nav__container">
+        <div class="nav__logo">
+          <img src="logo_ieee.png" alt="IEEE USP São Carlos" class="logo">
+        </div>
+        <div class="nav__menu" id="nav-menu" aria-hidden="true">
+          <ul class="nav__list">
+            <li class="nav__item"><a href="index.html#programacao" class="nav__link">Programação</a></li>
+            <li class="nav__item"><a href="palestrantes.html" class="nav__link">Palestrantes</a></li>
+            <li class="nav__item nav__item--mobile-cta">
+              <a href="inscricoes.html" class="nav__link nav__cta nav__cta--mobile">Inscrever-se</a>
+            </li>
+          </ul>
+        </div>
+        <div class="nav__actions">
+          <a href="inscricoes.html" class="nav__cta nav__cta--desktop">Inscrever-se</a>
+          <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="confirmation">
+      <div class="container">
+        <div class="confirmation__card">
+          <img src="image/hero fibraotica/central.png" alt="Detalhe de fibra óptica" class="confirmation__image">
+          <h1 class="confirmation__title">Inscrição confirmada!</h1>
+          <p class="confirmation__message">
+            Obrigado por garantir sua presença no Minicurso de Fibra Óptica. Entre no grupo exclusivo do WhatsApp para receber orientações de acesso ao IFSC e materiais preparatórios.
+          </p>
+          <a href="https://chat.whatsapp.com/BwQwQkUYZM88S5d3iLMCR3?mode=ems_copy_t" target="_blank" class="btn btn--primary btn--whatsapp">
+            <i class="fab fa-whatsapp"></i>
+            Entrar no grupo do minicurso
+          </a>
+          <div class="confirmation__footer">
+            <a href="minicurso-fibra.html" class="nav__link">Ver detalhes do minicurso</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <div class="footer__logo">
+          <img src="logo_ieee.png" alt="IEEE USP São Carlos">
+          <p>Ramo Estudantil IEEE<br>USP São Carlos</p>
+        </div>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/ieee.uspsc/" target="_blank" class="social__link" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/ieee-usp-são-carlos/" target="_blank" class="social__link" rel="noopener"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:ieee.uspsc@gmail.com" class="social__link"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2025 IEEE USP São Carlos. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

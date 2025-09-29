@@ -20,13 +20,33 @@
         return;
       }
 
+      const terms = document.getElementById('terms');
+      if (terms && !terms.checked) {
+        setStatus('Você precisa concordar com os termos de uso para continuar.', false);
+        return;
+      }
+
       const data = new FormData(form);
       const payload = new URLSearchParams();
 
-      ['nome1','nome2','nome3','nusp1','nusp2','nusp3','celular','email'].forEach(k => {
-        payload.set(k, data.get(k) || '');
+      const fields = [
+        'team_name',
+        'leader_name',
+        'leader_email',
+        'leader_university',
+        'member2_name',
+        'member2_email',
+        'member2_university',
+        'member3_name',
+        'member3_email',
+        'member3_university'
+      ];
+
+      fields.forEach((key) => {
+        payload.set(key, (data.get(key) || '').toString().trim());
       });
 
+      payload.set('terms', terms?.checked ? 'true' : 'false');
       payload.set('_hp', hp?.value || '');
 
       try {
