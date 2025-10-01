@@ -15,7 +15,8 @@
       indicacaoWrapper.classList.toggle('hidden', !indicacaoCheckbox.checked);
       const input = document.getElementById('indicacao');
       if (input) {
-        input.required = indicacaoCheckbox.checked;
+        // Campo de indicação é sempre opcional
+        input.required = false;
       }
     });
   }
