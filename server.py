@@ -248,6 +248,58 @@ def submit_minicurso_fibra():
         logger.error(f"Erro geral no minicurso fibra: {e}")
         return jsonify({'success': False, 'message': 'Erro interno do servidor'}), 500
 
+@app.route('/api/minicurso-quantica', methods=['POST'])
+def submit_minicurso_quantica():
+    """Handle minicurso Computação Quântica registrations"""
+    try:
+        logger.info(f"Received minicurso quântica submission from IP: {request.remote_addr}")
+        data = request.form if request.form else request.json
+
+        if not data:
+            logger.warning("Nenhum dado recebido para minicurso quântica")
+            return jsonify({'success': False, 'message': 'Nenhum dado recebido'}), 400
+
+        if data.get('_hp'):
+            logger.warning("Tentativa de spam detectada no minicurso quântica")
+            return jsonify({'success': False, 'message': 'Erro de validação'}), 400
+
+        nome = data.get('nome', '').strip()
+        telefone = data.get('telefone', '').strip()
+        email = data.get('email', '').strip()
+        nusp = data.get('nusp', '').strip() if data.get('nusp') else None
+
+        if not nome or not telefone or not email:
+            logger.warning("Campos obrigatórios faltando no minicurso quântica")
+            return jsonify({'success': False, 'message': 'Informe nome completo, telefone e e-mail.'}), 400
+
+        supabase = get_supabase_client()
+        if not supabase:
+            logger.error("Falha ao conectar ao Supabase para minicurso quântica")
+            return jsonify({'success': False, 'message': 'Erro de conexão com o banco de dados'}), 500
+
+        payload = {
+            'nome': nome,
+            'telefone': telefone,
+            'email': email,
+            'nusp': nusp if nusp else None
+        }
+
+        try:
+            result = supabase.table('minicurso_quantica_inscricoes').insert(payload).execute()
+            if result.data:
+                registro_id = result.data[0]['id']
+                logger.info(f"Inscrição do minicurso quântica salva com ID {registro_id}")
+                return jsonify({'success': True, 'message': 'Inscrição registrada com sucesso!', 'id': registro_id}), 200
+            logger.error("Nenhum dado retornado na inserção do minicurso quântica")
+            return jsonify({'success': False, 'message': 'Erro ao salvar dados'}), 500
+        except Exception as db_error:
+            logger.error(f"Erro Supabase minicurso quântica: {db_error}")
+            return jsonify({'success': False, 'message': 'Erro ao salvar dados no banco'}), 500
+
+    except Exception as e:
+        logger.error(f"Erro geral no minicurso quântica: {e}")
+        return jsonify({'success': False, 'message': 'Erro interno do servidor'}), 500
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
