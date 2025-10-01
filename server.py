@@ -5,6 +5,7 @@ import os
 from supabase import create_client, Client
 from datetime import datetime
 import logging
+import re
 
 # Load environment variables
 load_dotenv()
@@ -20,6 +21,44 @@ logger = logging.getLogger(__name__)
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 # Prefer service role key on the server (bypasses RLS); fallback to anon key if not provided
 SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY') or os.getenv('SUPABASE_KEY')
+
+
+def sanitize_text(value: str, max_length: int = 200) -> str:
+    """Trim and limit plain text fields."""
+    if not isinstance(value, str):
+        return ''
+    return value.strip()[:max_length]
+
+
+def sanitize_digits(value: str, max_length: int = 25) -> str:
+    """Keep only digits from strings such as phone numbers or matriculation IDs."""
+    if not isinstance(value, str):
+        return ''
+    digits = re.sub(r'\D+', '', value)
+    return digits[:max_length]
+
+
+def format_supabase_error(error: Exception):
+    """Provide user-friendly errors while preserving technical context for debugging."""
+    error_str = str(error)
+    lowered = error_str.lower()
+
+    if 'duplicate key value violates unique constraint' in lowered:
+        return 409, 'Este telefone já possui uma inscrição registrada.', error_str
+
+    if 'row level security' in lowered:
+        return 403, 'Permissão negada para gravar os dados. Verifique as policies do Supabase.', error_str
+
+    if 'invalid input syntax for type' in lowered:
+        return 400, 'Algum campo possui formato inválido. Revise os dados digitados e tente novamente.', error_str
+
+    if 'null value in column' in lowered:
+        # Tenta destacar a coluna envolvida, se presente
+        match = re.search(r'column "([^"]+)"', error_str)
+        column = match.group(1) if match else 'desconhecida'
+        return 400, f'Campo obrigatório ausente ou vazio: {column}.', error_str
+
+    return 500, 'Erro ao salvar dados no banco', error_str
 
 def get_supabase_client():
     """Get Supabase client"""
@@ -176,24 +215,33 @@ def submit_hackathon():
             return jsonify({'success': False, 'message': 'Erro de conexão com o banco'}), 500
 
         payload = {
-            'nome1': data.get('nome1', ''),
-            'nome2': data.get('nome2', ''),
-            'nome3': data.get('nome3', ''),
-            'nusp1': data.get('nusp1', ''),
-            'nusp2': data.get('nusp2', ''),
-            'nusp3': data.get('nusp3', ''),
-            'celular': data.get('celular', ''),
-            'email': data.get('email', '')
+            'nome1': sanitize_text(data.get('nome1', ''), 150),
+            'nome2': sanitize_text(data.get('nome2', ''), 150),
+            'nome3': sanitize_text(data.get('nome3', ''), 150),
+            'nusp1': sanitize_text(data.get('nusp1', ''), 30) or None,
+            'nusp2': sanitize_text(data.get('nusp2', ''), 30) or None,
+            'nusp3': sanitize_text(data.get('nusp3', ''), 30) or None,
+            'celular': sanitize_text(data.get('celular', ''), 50),
+            'email': sanitize_text(data.get('email', ''), 160)
         }
 
         try:
             result = supabase.table('hackathon_inscricoes').insert(payload).execute()
+
+            # Biblioteca supabase-py armazena erros em result.error sem levantar exceção
+            if hasattr(result, 'error') and result.error:
+                status_code, message, error_str = format_supabase_error(result.error)
+                logger.error("Erro Supabase hackathon", extra={'status_code': status_code, 'error': error_str})
+                return jsonify({'success': False, 'message': message, 'technical_error': error_str}), status_code
+
             if result.data:
                 return jsonify({'success': True, 'message': 'Inscrição do hackathon enviada com sucesso!', 'id': result.data[0]['id']}), 200
+
             return jsonify({'success': False, 'message': 'Erro ao salvar dados'}), 500
         except Exception as e:
-            logger.error(f"Hackathon Supabase error: {e}")
-            return jsonify({'success': False, 'message': 'Erro ao salvar dados no banco'}), 500
+            status_code, message, error_str = format_supabase_error(e)
+            logger.error("Hackathon Supabase error", extra={'error': error_str, 'status_code': status_code})
+            return jsonify({'success': False, 'message': message, 'technical_error': error_str}), status_code
     except Exception as e:
         logger.error(f"General error in submit_hackathon: {e}")
         return jsonify({'success': False, 'message': 'Erro interno do servidor'}), 500
@@ -213,13 +261,22 @@ def submit_minicurso_fibra():
             logger.warning("Tentativa de spam detectada no minicurso fibra")
             return jsonify({'success': False, 'message': 'Erro de validação'}), 400
 
-        nome = data.get('nome', '').strip()
-        telefone = data.get('telefone', '').strip()
-        nusp = data.get('nusp', '').strip() if data.get('nusp') else None
+        nome = sanitize_text(data.get('nome', ''), 150)
+        telefone = sanitize_text(data.get('telefone', ''), 50)
+        nusp = sanitize_text(data.get('nusp', ''), 30) if data.get('nusp') else None
 
         if not nome or not telefone:
-            logger.warning("Campos obrigatórios faltando no minicurso fibra")
+            logger.warning("Campos obrigatórios faltando no minicurso fibra", extra={'nome': bool(nome), 'telefone': bool(telefone)})
             return jsonify({'success': False, 'message': 'Informe nome completo e telefone.'}), 400
+
+        logger.info(
+            "Valid minicurso fibra payload",
+            extra={
+                'nome': nome[:50],
+                'telefone': telefone,
+                'nusp': nusp
+            }
+        )
 
         supabase = get_supabase_client()
         if not supabase:
@@ -234,15 +291,24 @@ def submit_minicurso_fibra():
 
         try:
             result = supabase.table('minicurso_fibra_inscricoes').insert(payload).execute()
+
+            # Biblioteca supabase-py armazena erros em result.error sem levantar exceção
+            if hasattr(result, 'error') and result.error:
+                status_code, message, error_str = format_supabase_error(result.error)
+                logger.error("Erro Supabase (payload validado) ", extra={'status_code': status_code, 'error': error_str})
+                return jsonify({'success': False, 'message': message, 'technical_error': error_str}), status_code
+
             if result.data:
                 registro_id = result.data[0]['id']
                 logger.info(f"Inscrição do minicurso fibra salva com ID {registro_id}")
                 return jsonify({'success': True, 'message': 'Inscrição registrada com sucesso!', 'id': registro_id}), 200
-            logger.error("Nenhum dado retornado na inserção do minicurso fibra")
+
+            logger.error("Nenhum dado retornado na inserção do minicurso fibra", extra={'result': getattr(result, 'data', None)})
             return jsonify({'success': False, 'message': 'Erro ao salvar dados'}), 500
         except Exception as db_error:
-            logger.error(f"Erro Supabase minicurso fibra: {db_error}")
-            return jsonify({'success': False, 'message': 'Erro ao salvar dados no banco'}), 500
+            status_code, message, error_str = format_supabase_error(db_error)
+            logger.error("Erro Supabase minicurso fibra", extra={'error': error_str, 'status_code': status_code})
+            return jsonify({'success': False, 'message': message, 'technical_error': error_str}), status_code
 
     except Exception as e:
         logger.error(f"Erro geral no minicurso fibra: {e}")
@@ -263,10 +329,10 @@ def submit_minicurso_quantica():
             logger.warning("Tentativa de spam detectada no minicurso quântica")
             return jsonify({'success': False, 'message': 'Erro de validação'}), 400
 
-        nome = data.get('nome', '').strip()
-        telefone = data.get('telefone', '').strip()
-        email = data.get('email', '').strip()
-        nusp = data.get('nusp', '').strip() if data.get('nusp') else None
+        nome = sanitize_text(data.get('nome', ''), 150)
+        telefone = sanitize_text(data.get('telefone', ''), 50)
+        email = sanitize_text(data.get('email', ''), 160)
+        nusp = sanitize_text(data.get('nusp', ''), 30) if data.get('nusp') else None
 
         if not nome or not telefone or not email:
             logger.warning("Campos obrigatórios faltando no minicurso quântica")
@@ -286,15 +352,24 @@ def submit_minicurso_quantica():
 
         try:
             result = supabase.table('minicurso_quantica_inscricoes').insert(payload).execute()
+
+            # Biblioteca supabase-py armazena erros em result.error sem levantar exceção
+            if hasattr(result, 'error') and result.error:
+                status_code, message, error_str = format_supabase_error(result.error)
+                logger.error("Erro Supabase minicurso quântica", extra={'status_code': status_code, 'error': error_str})
+                return jsonify({'success': False, 'message': message, 'technical_error': error_str}), status_code
+
             if result.data:
                 registro_id = result.data[0]['id']
                 logger.info(f"Inscrição do minicurso quântica salva com ID {registro_id}")
                 return jsonify({'success': True, 'message': 'Inscrição registrada com sucesso!', 'id': registro_id}), 200
+
             logger.error("Nenhum dado retornado na inserção do minicurso quântica")
             return jsonify({'success': False, 'message': 'Erro ao salvar dados'}), 500
         except Exception as db_error:
-            logger.error(f"Erro Supabase minicurso quântica: {db_error}")
-            return jsonify({'success': False, 'message': 'Erro ao salvar dados no banco'}), 500
+            status_code, message, error_str = format_supabase_error(db_error)
+            logger.error("Erro Supabase minicurso quântica", extra={'error': error_str, 'status_code': status_code})
+            return jsonify({'success': False, 'message': message, 'technical_error': error_str}), status_code
 
     except Exception as e:
         logger.error(f"Erro geral no minicurso quântica: {e}")
