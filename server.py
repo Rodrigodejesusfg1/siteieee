@@ -200,8 +200,8 @@ def submit_hackathon():
         if not data:
             return jsonify({'success': False, 'message': 'Nenhum dado recebido'}), 400
 
-        # Required fields
-        required = ['nome1', 'nome2', 'nome3', 'celular', 'email']
+        # Campos obrigatórios enviados pelo frontend
+        required = ['team_name', 'leader_name', 'leader_email', 'celular', 'leader_university']
         missing = [f for f in required if not data.get(f)]
         if missing:
             return jsonify({'success': False, 'message': f'Campos obrigatórios faltando: {", ".join(missing)}'}), 400
@@ -214,15 +214,24 @@ def submit_hackathon():
         if not supabase:
             return jsonify({'success': False, 'message': 'Erro de conexão com o banco'}), 500
 
+        # Monta o payload com os campos novos, que correspondem à tabela recriada
         payload = {
-            'nome1': sanitize_text(data.get('nome1', ''), 150),
-            'nome2': sanitize_text(data.get('nome2', ''), 150),
-            'nome3': sanitize_text(data.get('nome3', ''), 150),
-            'nusp1': sanitize_text(data.get('nusp1', ''), 30) or None,
-            'nusp2': sanitize_text(data.get('nusp2', ''), 30) or None,
-            'nusp3': sanitize_text(data.get('nusp3', ''), 30) or None,
-            'celular': sanitize_text(data.get('celular', ''), 50),
-            'email': sanitize_text(data.get('email', ''), 160)
+            'team_name': sanitize_text(data.get('team_name')),
+            'leader_name': sanitize_text(data.get('leader_name')),
+            'leader_email': sanitize_text(data.get('leader_email')),
+            'celular': sanitize_text(data.get('celular')),
+            'leader_university': sanitize_text(data.get('leader_university')),
+            
+            # Campos opcionais
+            'member2_name': sanitize_text(data.get('member2_name')) or None,
+            'member2_email': sanitize_text(data.get('member2_email')) or None,
+            'member2_university': sanitize_text(data.get('member2_university')) or None,
+            
+            'member3_name': sanitize_text(data.get('member3_name')) or None,
+            'member3_email': sanitize_text(data.get('member3_email')) or None,
+            'member3_university': sanitize_text(data.get('member3_university')) or None,
+            
+            'terms_accepted': data.get('terms_accepted') == 'on'
         }
 
         try:
