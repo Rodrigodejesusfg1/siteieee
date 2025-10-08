@@ -623,6 +623,11 @@ img {
     opacity: 1;
 }
 
+.hero__grid.hero__grid--2x2 {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    max-width: 420px;
+}
+
 .grid__item {
     aspect-ratio: 1 / 1;
     border-radius: 0;
@@ -788,6 +793,11 @@ img {
         width: 100%;
         max-width: 360px;
         margin: 0 auto;
+    }
+
+    .hero__grid.hero__grid--2x2 {
+        grid-template-columns: repeat(2, minmax(130px, 1fr));
+        max-width: 320px;
     }
 }
 
